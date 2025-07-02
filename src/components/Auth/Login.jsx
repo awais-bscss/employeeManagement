@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 
-const Login = () => {
+const Login = ({ handleLogin }) => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      `Form submitted with Email: ${Email} and Password: ${Password}`
-    );
+    handleLogin(Email, Password);
     setEmail("");
     setPassword("");
   };
@@ -27,6 +25,7 @@ const Login = () => {
             required
             className="border-2 border-[#52796f]  rounded-full px-3 py-2 outline-none text-[#252f35] bg-transparent placeholder:text-[#2f3e46] focus:placeholder-transparent w-70"
             type="email"
+            autoComplete="off"
             placeholder="Enter your Email "
           />
           <input
