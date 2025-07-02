@@ -7,8 +7,8 @@ const EmployeeDashboard = ({ handleLogout, data }) => {
   return (
     <div className="p-10 h-screen w-screen bg-[#d8f3dc]">
       <Header handleLogout={handleLogout} data={data} />
-      <TaskListNum />
-      <TaskList />
+      <TaskListNum data={data} />
+      <TaskList data={data} />
     </div>
   );
 };

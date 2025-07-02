@@ -25,24 +25,35 @@ const App = () => {
   };
 
   const handleLogin = (email, password) => {
-    if (
-      data &&
-      data.admin.find((e) => email === e.email && password === e.password)
-    ) {
+    if (!data) return;
+
+    const admin = data.admin.find(
+      (e) => email === e.email && password === e.password
+    );
+    if (admin) {
       setUserType("admin");
-      localStorage.setItem("loginUser", JSON.stringify({ role: "admin" }));
-    } else if (data) {
-      const employee = data.employees.find(
-        (e) => email === e.email && password === e.password
+      setLoginUserData(admin);
+      localStorage.setItem(
+        "loginUser",
+        JSON.stringify({ role: "admin", data: admin })
       );
-      if (employee) {
-        setUserType("employee");
-        setLoginUserData(employee);
-        localStorage.setItem("loginUser", JSON.stringify({ role: "employee" }));
-      } else {
-        alert("Invalid credentials");
-      }
+      return;
     }
+
+    const employee = data.employees.find(
+      (e) => email === e.email && password === e.password
+    );
+    if (employee) {
+      setUserType("employee");
+      setLoginUserData(employee);
+      localStorage.setItem(
+        "loginUser",
+        JSON.stringify({ role: "employee", data: employee })
+      );
+      return;
+    }
+
+    alert("Invalid credentials");
   };
 
   console.log("userType:", userType);

@@ -14,7 +14,6 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const employees = localStorage.getItem("employees");
     const admin = localStorage.getItem("admin");
-
     if (!employees || !admin) {
       setStorage(); // call your setStorage function to initialize data
     }
