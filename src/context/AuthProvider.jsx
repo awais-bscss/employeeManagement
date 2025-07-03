@@ -19,8 +19,8 @@ const AuthProvider = ({ children }) => {
       setUserdata({ employees: data.employees || [], admin: data.admin || [] });
       setIsLoading(false);
     } catch (error) {
+      console.error("Error loading data:", error);
       setIsLoading(false);
-      return error;
     }
   }, []);
 

@@ -45,10 +45,8 @@ const CreateTasks = () => {
           ...emp,
           tasks: [...emp.tasks, newTask],
           taskNumbers: {
-            active: emp.taskNumbers.active,
+            ...emp.taskNumbers,
             newTask: emp.taskNumbers.newTask + 1,
-            completed: emp.taskNumbers.completed,
-            failed: emp.taskNumbers.failed,
           },
         };
       }
@@ -68,8 +66,8 @@ const CreateTasks = () => {
         admin: admin,
       });
     } catch (error) {
+      console.error("Failed to save task:", error);
       alert("Failed to save task. Please try again.");
-      return;
     }
 
     setTaskTitle("");
@@ -80,14 +78,17 @@ const CreateTasks = () => {
   };
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 max-w-4xl mx-auto">
       <form
         onSubmit={handleSubmit}
-        className="flex w-full flex-wrap justify-between items-start"
+        className="flex flex-col sm:flex-row w-full flex-wrap justify-between items-start gap-4 sm:gap-6"
       >
-        <div className="w-full sm:w-[40%] flex flex-col gap-6">
+        <div className="w-full sm:w-[48%] flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <label htmlFor="taskTitle" className="text-lg font-medium">
+            <label
+              htmlFor="taskTitle"
+              className="text-base sm:text-lg font-medium"
+            >
               Task Title
             </label>
             <input
@@ -96,13 +97,13 @@ const CreateTasks = () => {
               type="text"
               id="taskTitle"
               placeholder="Make a UI Design"
-              className="p-2 border border-gray-600 outline-none rounded-md"
+              className="p-2 border border-gray-600 outline-none rounded-md w-full"
               required
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="date" className="text-lg font-medium">
+            <label htmlFor="date" className="text-base sm:text-lg font-medium">
               Date
             </label>
             <input
@@ -110,13 +111,16 @@ const CreateTasks = () => {
               onChange={(e) => setTaskDate(e.target.value)}
               type="date"
               id="date"
-              className="p-2 border border-gray-600 outline-none rounded-md"
+              className="p-2 border border-gray-600 outline-none rounded-md w-full"
               required
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="assignTo" className="text-lg font-medium">
+            <label
+              htmlFor="assignTo"
+              className="text-base sm:text-lg font-medium"
+            >
               Assign To
             </label>
             <input
@@ -125,13 +129,16 @@ const CreateTasks = () => {
               type="text"
               id="assignTo"
               placeholder="Enter Employee Name"
-              className="p-2 border border-gray-600 outline-none rounded-md"
+              className="p-2 border border-gray-600 outline-none rounded-md w-full"
               required
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="category" className="text-lg font-medium">
+            <label
+              htmlFor="category"
+              className="text-base sm:text-lg font-medium"
+            >
               Category
             </label>
             <input
@@ -140,15 +147,18 @@ const CreateTasks = () => {
               type="text"
               id="category"
               placeholder="dev, design, etc"
-              className="p-2 border border-gray-600 outline-none rounded-md"
+              className="p-2 border border-gray-600 outline-none rounded-md w-full"
               required
             />
           </div>
         </div>
 
-        <div className="w-full sm:w-[40%] flex flex-col gap-6">
+        <div className="w-full sm:w-[48%] flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <label htmlFor="description" className="text-lg font-medium">
+            <label
+              htmlFor="description"
+              className="text-base sm:text-lg font-medium"
+            >
               Description
             </label>
             <textarea
@@ -158,7 +168,7 @@ const CreateTasks = () => {
               cols={30}
               rows={10}
               placeholder="Enter task description"
-              className="p-2 border border-gray-600 outline-none rounded-md resize-none"
+              className="p-2 border border-gray-600 outline-none rounded-md resize-none w-full"
               required
             />
           </div>
@@ -166,7 +176,7 @@ const CreateTasks = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`rounded-full px-8 py-2 text-white bg-[#2f3e46] hover:bg-[#405f57] transition-colors duration-300 ${
+            className={`rounded-full px-6 py-2 text-white bg-[#2f3e46] hover:bg-[#405f57] transition-colors duration-300 ${
               isLoading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >

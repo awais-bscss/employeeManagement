@@ -321,7 +321,7 @@ export const setStorage = () => {
     localStorage.setItem("employees", JSON.stringify(employees));
     localStorage.setItem("admin", JSON.stringify(admin));
   } catch (error) {
-    return error;
+    console.error("Error setting storage:", error);
   }
 };
 
@@ -331,6 +331,7 @@ export const getStorage = () => {
     const adminData = JSON.parse(localStorage.getItem("admin")) || [];
     return { employees: employeesData, admin: adminData };
   } catch (error) {
-    return { employees: [], admin: [], error };
+    console.error("Error getting storage:", error);
+    return { employees: [], admin: [] };
   }
 };

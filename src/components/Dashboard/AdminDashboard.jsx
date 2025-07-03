@@ -5,7 +5,7 @@ import AllTask from "../layouts/AllTask";
 
 const AdminDashboard = ({ handleLogout, data }) => {
   return (
-    <div className="min-h-screen w-full bg-[#d8f3dc] overflow-x-hidden px-10">
+    <div className="min-h-screen w-full bg-[#d8f3dc] overflow-x-hidden p-4 sm:p-10">
       <Header handleLogout={handleLogout} userName={data?.name || "Admin"} />
       <div className="max-w-7xl mx-auto">
         <CreateTasks />
