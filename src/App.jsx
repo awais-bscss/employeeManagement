@@ -7,41 +7,55 @@ import { AuthContext } from "./context/AuthProvider";
 const App = () => {
   const [userType, setUserType] = useState("");
   const [loginUserData, setLoginUserData] = useState(null);
-  const data = useContext(AuthContext);
+  const { employees, admin, isLoading } = useContext(AuthContext);
 
   useEffect(() => {
-    if (data) {
+    if (!isLoading && employees && admin) {
       const loginUser = localStorage.getItem("loginUser");
       if (loginUser) {
-        const parsedUser = JSON.parse(loginUser);
-        setUserType(parsedUser.role);
+        try {
+          const parsedUser = JSON.parse(loginUser);
+          setUserType(parsedUser.role);
+          setLoginUserData(parsedUser.data);
+        } catch (error) {
+          localStorage.removeItem("loginUser");
+        }
       }
     }
-  }, [data]);
+  }, [employees, admin, isLoading]);
 
   const handleLogout = () => {
     setUserType("");
+    setLoginUserData(null);
     localStorage.removeItem("loginUser");
   };
 
   const handleLogin = (email, password) => {
-    if (!data) return;
+    if (isLoading) {
+      alert("Data is still loading. Please wait.");
+      return;
+    }
 
-    const admin = data.admin.find(
-      (e) => email === e.email && password === e.password
+    if (!employees || !admin) {
+      alert("Data not loaded. Please try again or refresh the page.");
+      return;
+    }
+
+    const foundAdmin = admin.find(
+      (e) => e.email === email && e.password === password
     );
-    if (admin) {
+    if (foundAdmin) {
       setUserType("admin");
-      setLoginUserData(admin);
+      setLoginUserData(foundAdmin);
       localStorage.setItem(
         "loginUser",
-        JSON.stringify({ role: "admin", data: admin })
+        JSON.stringify({ role: "admin", data: foundAdmin })
       );
       return;
     }
 
-    const employee = data.employees.find(
-      (e) => email === e.email && password === e.password
+    const employee = employees.find(
+      (e) => e.email === email && e.password === password
     );
     if (employee) {
       setUserType("employee");
@@ -56,17 +70,14 @@ const App = () => {
     alert("Invalid credentials");
   };
 
-  console.log("userType:", userType);
-
   return (
     <>
-      {!userType && <Login handleLogin={handleLogin} />}
-
-      {userType === "employee" && (
+      {isLoading && <div>Loading...</div>}
+      {!isLoading && !userType && <Login handleLogin={handleLogin} />}
+      {!isLoading && userType === "employee" && (
         <EmployeeDashboard handleLogout={handleLogout} data={loginUserData} />
       )}
-
-      {userType === "admin" && (
+      {!isLoading && userType === "admin" && (
         <AdminDashboard handleLogout={handleLogout} data={loginUserData} />
       )}
     </>

@@ -1,4 +1,3 @@
-localStorage.clear();
 const employees = [
   {
     id: 1,
@@ -129,7 +128,7 @@ const employees = [
     taskNumbers: {
       active: 2,
       newTask: 1,
-      completed: 1,
+      completed: 3,
       failed: 0,
     },
     tasks: [
@@ -249,7 +248,7 @@ const employees = [
     taskNumbers: {
       active: 3,
       newTask: 2,
-      completed: 1,
+      completed: 2,
       failed: 1,
     },
     tasks: [
@@ -318,11 +317,20 @@ const admin = [
 ];
 
 export const setStorage = () => {
-  localStorage.setItem("employees", JSON.stringify(employees));
-  localStorage.setItem("admin", JSON.stringify(admin));
+  try {
+    localStorage.setItem("employees", JSON.stringify(employees));
+    localStorage.setItem("admin", JSON.stringify(admin));
+  } catch (error) {
+    return error;
+  }
 };
+
 export const getStorage = () => {
-  const employeesData = JSON.parse(localStorage.getItem("employees"));
-  const adminData = JSON.parse(localStorage.getItem("admin"));
-  return { employees: employeesData, admin: adminData };
+  try {
+    const employeesData = JSON.parse(localStorage.getItem("employees")) || [];
+    const adminData = JSON.parse(localStorage.getItem("admin")) || [];
+    return { employees: employeesData, admin: adminData };
+  } catch (error) {
+    return { employees: [], admin: [], error };
+  }
 };

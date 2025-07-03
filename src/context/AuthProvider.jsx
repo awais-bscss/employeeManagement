@@ -4,25 +4,37 @@ import { getStorage, setStorage } from "../utils/localStorage";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [userdata, setUserdata] = useState(null);
+  const [userdata, setUserdata] = useState({ employees: [], admin: [] });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const data = getStorage();
-    setUserdata({ employees: data.employees || [], admin: data.admin || [] });
-  }, []);
+    try {
+      const employees = localStorage.getItem("employees");
+      const admin = localStorage.getItem("admin");
+      if (!employees || !admin) {
+        setStorage();
+      }
 
-  useEffect(() => {
-    const employees = localStorage.getItem("employees");
-    const admin = localStorage.getItem("admin");
-    if (!employees || !admin) {
-      setStorage(); // call your setStorage function to initialize data
+      const data = getStorage();
+      setUserdata({ employees: data.employees || [], admin: data.admin || [] });
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      return error;
     }
   }, []);
 
   return (
-    <>
-      <AuthContext.Provider value={userdata}>{children}</AuthContext.Provider>
-    </>
+    <AuthContext.Provider
+      value={{
+        employees: userdata.employees,
+        admin: userdata.admin,
+        setUserdata,
+        isLoading,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };
 
