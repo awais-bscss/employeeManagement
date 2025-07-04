@@ -2,7 +2,7 @@ const employees = [
   {
     id: 1,
     name: "Ahmad",
-    email: "doe@example.com",
+    email: "ahmad@mail.com",
     password: "1234",
     role: "employee",
     taskNumbers: {
@@ -57,7 +57,7 @@ const employees = [
   {
     id: 2,
     name: "Fatima",
-    email: "smith@example.com",
+    email: "fatima@mail.com",
     password: "1234",
     role: "employee",
     taskNumbers: {
@@ -122,7 +122,7 @@ const employees = [
   {
     id: 3,
     name: "Yusuf",
-    email: "brown@example.com",
+    email: "yusuf@mail.com",
     password: "1234",
     role: "employee",
     taskNumbers: {
@@ -167,7 +167,7 @@ const employees = [
   {
     id: 4,
     name: "Aisha",
-    email: "wilson@example.com",
+    email: "aisha@mail.com",
     password: "1234",
     role: "employee",
     taskNumbers: {
@@ -242,7 +242,7 @@ const employees = [
   {
     id: 5,
     name: "Omar",
-    email: "mjones@example.com",
+    email: "omar@mail.com",
     password: "1234",
     role: "employee",
     taskNumbers: {
@@ -310,7 +310,7 @@ const admin = [
   {
     id: 6,
     name: "Awais",
-    email: "admin@example.com",
+    email: "awais@mail.com",
     password: "1234",
     role: "admin",
   },
